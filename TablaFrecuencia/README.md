@@ -18,8 +18,12 @@ print(info_adicional)
 Codigo:
 
 `np.linspace`: Genera un arreglo de valores equidistantes para definir los límites de cada clase.
+
 `np.histogram`: Calcula la frecuencia de los datos en cada intervalo definido por bins.
+
 `np.cumsum`: Calcula la suma acumulativa de las frecuencias para obtener la frecuencia acumulada.
+
+
 
 ```
 
