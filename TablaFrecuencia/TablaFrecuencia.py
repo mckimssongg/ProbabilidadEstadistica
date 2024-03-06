@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from func.funcTablaFrecuencias import rango, numClases, amplitud, intervalos, frecuencias
 
 class TablaDeFrecuencia:
     def __init__(self, datos, num_clases=None):
@@ -53,6 +54,39 @@ class TablaDeFrecuencia:
         })
 
         return tabla
+    
+    def generar_tabla_alternativa(self):
+        # Calcula los intervalos y las frecuencias usando las funciones importadas
+        interval = intervalos(self.datos)
+        frec = frecuencias(self.datos)
+        
+        # Etiqueta los intervalos para mostrarlos en la tabla
+        etiquetas = [f"{inf:.2f} - {sup:.2f}" for inf, sup in interval]
+
+        # Calcula la frecuencia acumulada
+        frec_acumulada = [sum(frec[:i+1]) for i in range(len(frec))]
+
+        # Calcula la frecuencia relativa
+        total_datos = sum(frec)
+        frec_relativa = [f / total_datos for f in frec]
+
+        # Calcula los límites reales como inf-0.5 y sup+0.5
+        limites_reales = [f"{inf-0.5:.2f} - {sup+0.5:.2f}" for inf, sup in interval]
+
+        # Calcula la marca de clase como el punto medio de cada intervalo
+        marca_clase = [(inf + sup) / 2 for inf, sup in interval]
+
+        # Construye la tabla de frecuencia como un DataFrame de Pandas
+        tabla = pd.DataFrame({
+            "Intervalo de Clase": etiquetas,
+            "Frecuencia": frec,
+            "Frecuencia Acumulada": frec_acumulada,
+            "Frecuencia Relativa": frec_relativa,
+            "Límites Reales": limites_reales,
+            "Marca de Clase": marca_clase
+        })
+
+        return tabla
 
     def mostrar_tabla(self):
         """Muestra la tabla de frecuencia generada."""
@@ -65,14 +99,3 @@ class TablaDeFrecuencia:
             "Número de Clases": self.num_clases,
             "Tamaño del Intervalo": self.intervalo
         }
-
-# Instanciando la clase con datos de ejemplo y sin especificar el número de clases
-datos_ejemplo = [23, 24, 24, 25, 22, 26, 28, 29, 27, 25, 26, 24, 23, 25, 27, 28, 29, 30, 22, 23]
-tabla_frecuencia = TablaDeFrecuencia(datos=datos_ejemplo)
-
-# Mostrar la tabla de frecuencia y la información adicional
-tabla = tabla_frecuencia.mostrar_tabla()
-info_adicional = tabla_frecuencia.info_adicional()
-
-print(tabla)
-print(info_adicional)
