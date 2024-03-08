@@ -1,4 +1,4 @@
-from TablaFrecuencia.TablaFrecuencia import TablaDeFrecuencia, rango, numClases, amplitud
+from TablaFrecuencia import TablaDeFrecuencia, rango, numClases, amplitud
 import pandas as pd
 
 # TESTS
