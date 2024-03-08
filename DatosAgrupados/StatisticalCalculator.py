@@ -76,28 +76,26 @@ class ExtendedStatisticalCalculator(StatisticalCalculator):
 
 
 
-# Datos de los intervalos y sus frecuencias absolutas
-intervals = np.array([[350, 399], [400, 449], [450, 499], [500, 549],
-                      [550, 599], [600, 649], [650, 699], [700, 749],
-                      [750, 799], [800, 849]])
-frequencies = np.array([4, 6, 9, 20, 31, 80, 42, 10, 8, 2])
+# # Datos de los intervalos y sus frecuencias absolutas
+# intervals = np.array([[350, 399], [400, 449], [450, 499], [500, 549],
+#                       [550, 599], [600, 649], [650, 699], [700, 749],
+#                       [750, 799], [800, 849]])
+# frequencies = np.array([4, 6, 9, 20, 31, 80, 42, 10, 8, 2])
 
-# Crear la instancia de la clase con los datos de intervalos y frecuencias
-stat_calc = ExtendedStatisticalCalculator(intervals, frequencies)
+# # Crear la instancia de la clase con los datos de intervalos y frecuencias
+# stat_calc = ExtendedStatisticalCalculator(intervals, frequencies)
 
-# Obtener los resultados
-mean = stat_calc.calculate_mean()
-median = stat_calc.calculate_median()
-mode = stat_calc.calculate_mode()
-quartile1 = stat_calc.calculate_quartile(1)
-quartile2 = stat_calc.calculate_quartile(2)
-quartile3 = stat_calc.calculate_quartile(3)
-percentile90 = stat_calc.calculate_percentile(90)
-decile1 = stat_calc.calculate_decile(1)
-decile5 = stat_calc.calculate_decile(5)
-decile9 = stat_calc.calculate_decile(9)
-median_with_formula = stat_calc.calculate_median_with_formula()
-mode_with_formula = stat_calc.calculate_mode_with_formula()
-
-print(median_with_formula, mode_with_formula)
-# print(mean, median, mode, quartile1, quartile2, quartile3, percentile90, decile1, decile5, decile9)
+# # Obtener los resultados
+# mean = stat_calc.calculate_mean()
+# median = stat_calc.calculate_median()
+# mode = stat_calc.calculate_mode()
+# quartile1 = stat_calc.calculate_quartile(1)
+# quartile2 = stat_calc.calculate_quartile(2)
+# quartile3 = stat_calc.calculate_quartile(3)
+# percentile90 = stat_calc.calculate_percentile(90)
+# decile1 = stat_calc.calculate_decile(1)
+# decile5 = stat_calc.calculate_decile(5)
+# decile9 = stat_calc.calculate_decile(9)
+# median_with_formula = stat_calc.calculate_median_with_formula()
+# mode_with_formula = stat_calc.calculate_mode_with_formula()
+# mean_with_formula = stat_calc.calculate_arithmetic_mean()
