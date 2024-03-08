@@ -18,7 +18,7 @@ def intervalos(data):
     limInf = min(data)
     limSup = limInf + amp
     intervalos = []
-    for _ in range(clases):
+    for _ in range(clases): # revisar por que si se acaba el rango no se toma el ultimo intervalo
         intervalos.append((limInf, limSup))
         limInf = limSup
         limSup += amp

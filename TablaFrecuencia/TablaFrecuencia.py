@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+from math import ceil
 from func.funcTablaFrecuencias import rango, numClases, amplitud, intervalos, frecuencias
 
 class TablaDeFrecuencia:
@@ -8,7 +9,7 @@ class TablaDeFrecuencia:
         Inicializa la tabla de frecuencia con los datos proporcionados.
         Si no se proporciona el número de clases, se calcula automáticamente.
         """
-        self.datos = datos
+        self.datos = sorted(datos)
         self.num_clases = num_clases if num_clases is not None else self.calcular_num_clases()
         self.rango = self.calcular_rango()
         self.intervalo = self.calcular_intervalo()
@@ -48,8 +49,8 @@ class TablaDeFrecuencia:
             "Intervalo de Clase": etiquetas,
             "Frecuencia": hist,
             "Frecuencia Acumulada": np.cumsum(hist),  # Suma acumulativa de las frecuencias para cada intervalo.
-            "Frecuencia Relativa": hist / sum(hist),  # Proporción de cada frecuencia respecto al total de observaciones.
-            "Límites Reales": [f"{edges[i]} - {edges[i+1]}" for i in range(len(edges)-1)],  # Límites exactos usados para el cálculo de frecuencias.
+            "Frecuencia Relativa": hist / sum(hist)*100,  # Proporción de cada frecuencia respecto al total de observaciones.
+            "Límites Reales": [f"{round(edges[i], 1)} - {round(edges[i+1], 1)}" for i in range(len(edges)-1)],  # Límites exactos usados para el cálculo de frecuencias.
             "Marca de Clase": (edges[:-1] + edges[1:]) / 2  # Promedio de los límites de cada intervalo, representando el valor central.
         })
 
@@ -68,7 +69,7 @@ class TablaDeFrecuencia:
 
         # Calcula la frecuencia relativa
         total_datos = sum(frec)
-        frec_relativa = [f / total_datos for f in frec]
+        frec_relativa = [(f / total_datos)*100 for f in frec]
 
         # Calcula los límites reales como inf-0.5 y sup+0.5
         limites_reales = [f"{inf-0.5:.2f} - {sup+0.5:.2f}" for inf, sup in interval]
