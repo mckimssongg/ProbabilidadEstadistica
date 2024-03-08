@@ -38,6 +38,10 @@ class StatisticalCalculator:
         return self.find_value_at_position(percentile_position)
 
 class ExtendedStatisticalCalculator(StatisticalCalculator):
+    def __init__(self, intervals, frequencies):
+        super().__init__(intervals, frequencies)
+        self.class_widths = self.intervals[:, 1] - self.intervals[:, 0] + 1
+            
     def calculate_decile(self, decile_number):
         if not 1 <= decile_number <= 9:
             raise ValueError("Decile number must be between 1 and 9")
@@ -49,6 +53,27 @@ class ExtendedStatisticalCalculator(StatisticalCalculator):
             raise ValueError("Quintile number must be between 1 and 4")
         quintile_position = (quintile_number * 0.2) * self.total_observations
         return self.find_value_at_position(quintile_position)
+    
+    def calculate_arithmetic_mean(self):
+        return np.sum(self.frequencies * self.midpoints) / np.sum(self.frequencies)
+    
+    def calculate_median_with_formula(self):
+        median_position = 0.5 * self.total_observations
+        median_interval_index = np.where(self.cumulative_frequencies >= median_position)[0][0]
+        L = self.intervals[median_interval_index, 0]  # Límite real inferior
+        F = self.cumulative_frequencies[median_interval_index - 1] if median_interval_index != 0 else 0
+        f = self.frequencies[median_interval_index]
+        c = self.class_widths[median_interval_index]
+        return L + (((median_position - F) / f) * c)
+    
+    def calculate_mode_with_formula(self):
+        modal_class_index = self.frequencies.argmax()
+        L = self.intervals[modal_class_index, 0] - 0.5 # Límite real inferior
+        delta1 = self.frequencies[modal_class_index] - self.frequencies[modal_class_index - 1]
+        delta2 = self.frequencies[modal_class_index] - self.frequencies[modal_class_index + 1]
+        c = self.class_widths[modal_class_index]
+        return L + ((delta1 / (delta1 + delta2)) * c)
+
 
 
 # Datos de los intervalos y sus frecuencias absolutas
@@ -71,5 +96,8 @@ percentile90 = stat_calc.calculate_percentile(90)
 decile1 = stat_calc.calculate_decile(1)
 decile5 = stat_calc.calculate_decile(5)
 decile9 = stat_calc.calculate_decile(9)
+median_with_formula = stat_calc.calculate_median_with_formula()
+mode_with_formula = stat_calc.calculate_mode_with_formula()
 
-print(mean, median, mode, quartile1, quartile2, quartile3, percentile90, decile1, decile5, decile9)
+print(median_with_formula, mode_with_formula)
+# print(mean, median, mode, quartile1, quartile2, quartile3, percentile90, decile1, decile5, decile9)
